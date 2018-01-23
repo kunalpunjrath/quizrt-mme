@@ -1,4 +1,4 @@
-# quizrt-ge
+# quizrt-mme
 Game Engine for QuizRT
 
 # Waiting Room Server Connections 

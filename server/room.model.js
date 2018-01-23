@@ -1,7 +1,6 @@
 class Room {
-  constructor(roomId, topicId, onRoomTimeOut, onRoomFull) {
-    this.roomId = roomId;
-    this.topicId = topicId;
+  constructor(topicId, onRoomTimeOut, onRoomFull) {
+    this._topicId = topicId;
     this.players = [];
     this.playersLimit = 4;
     this.roomAvailable = true;
@@ -16,10 +15,10 @@ class Room {
       this.roomAvailable = this.players.length < this.playersLimit;
       let time;
       if (this.players.length === 1) {
-        time = setTimeout(function(){ this.roomTimeOut(this.roomId, this.players.length) }, this.roomAliveTime * 1000);
+        time = setTimeout(function(){ this.roomTimeOut(this._topicId, this.players) }, this.roomAliveTime * 1000);
       } else if (!this.roomAvailable) {
         clearTimeout(time);
-        this.roomFull(this.roomId);
+        this.roomFull(this._topicId, this.players);
       }
     }
   };
@@ -32,11 +31,7 @@ class Room {
   };
 
   get topicId() {
-    return this.topicId;
-  };
-
-  get roomId() {
-    return this.roomId;
+    return this._topicId;
   };
 
   isAvailable() {

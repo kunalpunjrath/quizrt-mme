@@ -5,13 +5,14 @@
     "node": ">=4"
   },
   "scripts": {
-    "start": "node bin/www",
+    "start": "node app.js",
     "lint": "eslint ."
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "uniqid": "^4.1.1"
+    "uniqid": "^4.1.1",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
     "eslint": "^3.17.1",

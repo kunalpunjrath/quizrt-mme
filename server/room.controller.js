@@ -18,7 +18,6 @@ const onPlayerWaiting = function(currentSocket, playerId, topicId) {
 }
 
 const createRoom = function(topicId, playerId) {
-  socket.broadcast.emit('broadcast(): player ' + playerId + ' joined room with topic' + topicId);
   console.log(`Room Create ${topicId}`);
   const room = new Room(topicId, onRoomTimeOut, onRoomFull);
   room.addPlayer(playerId);
@@ -30,7 +29,6 @@ const createRoom = function(topicId, playerId) {
 
 const updateRoom = function(room, playerId) {
   if (room.isAvailable) {
-    socket.broadcast.emit('broadcast(): player ' + playerId + ' joined room with topic' + room.topicId);
     room.addPlayer(playerId);
     socket.emit("playerConnected", {playerId, topicId: room.topicId});
   }
@@ -42,7 +40,6 @@ const removeRoom = function(topicId) {
   });
   if(roomIndex !== -1) {
     waitingRooms.splice(roomIndex, 1);
-    socket.broadcast.emit('broadcast(): Room with topic ' + topicId + 'has been closed');
     console.log(`room ${topicId} removed. Queue Size ${waitingRooms.length}`);
   } else {
     console.log(`Invalid Room ${topicId}`);
@@ -67,7 +64,7 @@ const onRoomFull = function(topicId, players) {
 const joinGame = function(topicId, players) {
   // Call GE Rest API to get game id and emit to players.
   console.log(`Join Game ${topicId}`);
-  socket.emit("startGame", {gameId: "g1", topicId, players});
+  socket.emit('game id', {gameid: "g1", topicId, players});
 }
 
 module.exports = onPlayerWaiting;

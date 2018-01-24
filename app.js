@@ -30,15 +30,15 @@ var start = io
     
   });
 
-var gameison = io
-  .of('/'+gameid)
-  .on('connection', function (socket) {  
-    console.log('game is on');     
-    socket.on('play now', function(msg){
-          console.log("Message from UI ::: "+msg);          
-          gameison.emit('question', "send some questions");
-    });    
-  });
+// var gameison = io
+//   .of('/'+gameid)
+//   .on('connection', function (socket) {  
+//     console.log('game is on');     
+//     socket.on('play now', function(msg){
+//           console.log("Message from UI ::: "+msg);          
+//           gameison.emit('question', "send some questions");
+//     });    
+//   });
 
 http.listen(port, function(){
   console.log('listening on *:' + port);

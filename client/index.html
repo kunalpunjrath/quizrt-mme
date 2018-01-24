@@ -43,9 +43,14 @@
               //on receive of data create a new io connection with name space 'game id' received
               var gameid = data.gameid;
               console.log('gameid received '+data.gameid);
-              var gameison = io.connect('http://127.0.0.1:3001/'+data.gameid);
+              var gameison = io.connect('http://127.0.0.1:3000/'+data.gameid);
               gameison.emit('play now', 'game is started and need some questions');
+              gameison.on('send Questions', function (data) {
+              //news.emit('woot');
+              console.log(data);
+            });
         });
+        
 
 
         $('#end').click(function(){

@@ -26,18 +26,35 @@
     
     <script>
       $(function () {
-        var socket = io();
-        var gamestart = {
+        var start = io.connect('http://localhost/start');
+        var playerIds = ['p1', 'p2', 'p3', 'p4'];
+        var gamestart = {
           "topicid":"T1",
-          "playerid":"p1"
+          "playerid": playerIds[Math.floor(Math.random() * Math.floor(4))]
         };
         
         $('#start').click(function(){
-            socket.emit('game start', gamestart);
+            start.emit('game start', gamestart);            
         });
+
+        start.on('game id', function (data) {
+              //news.emit('woot');
+              console.log(data);
+              //on receive of data create a new io connection with name space 'game id' received
+              var gameid = data.gameid;
+              console.log('gameid received '+data.gameid);
+              var gameison = io.connect('http://localhost/'+data.gameid);
+              gameison.emit('play now', 'game is started and need some questions');
+        });
+
+
         $('#end').click(function(){
-            socket.emit('game end', "Player quits the game");
+            start.emit('game end', "Player quits the game");
         });
+
+        
+
+        /*
         socket.on('game start', function(msg){
           var topic = msg.topicid;
           var player = msg.playerid;
@@ -49,7 +66,8 @@
           $('#messages').html('');        
           $('#messages').append($('<li>').text('One of the player Quits playing'));
           //write some thing here to happen!
-        });
+        });*/
+
 
       });
     </script>

@@ -7,17 +7,23 @@ class Room {
     this.roomAliveTime = 20;
     this.roomTimeOut = onRoomTimeOut;
     this.roomFull = onRoomFull;
+    this.timer;
   };
 
   addPlayer(playerId) {
-    if (roomAvailable) {
+    if (this.roomAvailable) {
       this.players.push(playerId);
-      this.roomAvailable = this.players.length < this.playersLimit;
-      let time;
-      if (this.players.length === 1) {
-        time = setTimeout(function(){ this.roomTimeOut(this._topicId, this.players) }, this.roomAliveTime * 1000);
+      console.log(`room ${this._topicId} player size ${this.players.length}`);
+      this.roomAvailable = (this.players.length < this.playersLimit);
+      console.log(`Room Availability ${this.roomAvailable}`);
+      const onTimeOut = this.roomTimeOut;
+      const topic = this._topicId;
+      const playersArr = this.players;
+      if (this.players.length === 1) {        
+        this.timer = setTimeout(function(){ onTimeOut(topic, playersArr) }, this.roomAliveTime * 1000);
       } else if (!this.roomAvailable) {
-        clearTimeout(time);
+        console.log('Room full. Clear timer.');
+        clearTimeout(this.timer);
         this.roomFull(this._topicId, this.players);
       }
     }
